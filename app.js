@@ -1,72 +1,93 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.getElementById("menuToggle");
-  const mainNav = document.getElementById("mainNav");
+  const body = document.body;
+  const menuButton = document.getElementById("menuButton");
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("sidebarOverlay");
   const currentYear = document.getElementById("currentYear");
-  const backToTop = document.getElementById("backToTop");
 
-  // Atualiza o ano automaticamente.
   if (currentYear) {
     currentYear.textContent = new Date().getFullYear();
   }
 
-  // Abre e fecha o menu em telas pequenas.
-  if (menuToggle && mainNav) {
-    menuToggle.addEventListener("click", () => {
-      const isOpen = mainNav.classList.toggle("open");
+  function isMobile() {
+    return window.matchMedia("(max-width: 760px)").matches;
+  }
 
-      menuToggle.setAttribute("aria-expanded", String(isOpen));
-      menuToggle.setAttribute(
-        "aria-label",
-        isOpen ? "Fechar menu" : "Abrir menu"
-      );
+  function openMenu() {
+    if (isMobile()) {
+      body.classList.add("mobile-menu-open");
+      body.classList.remove("sidebar-collapsed");
+      menuButton.setAttribute("aria-expanded", "true");
+    } else {
+      body.classList.remove("sidebar-collapsed");
+      menuButton.setAttribute("aria-expanded", "true");
+    }
+  }
 
-      menuToggle.textContent = isOpen ? "✕" : "☰";
-    });
+  function closeMenu() {
+    if (isMobile()) {
+      body.classList.remove("mobile-menu-open");
+      menuButton.setAttribute("aria-expanded", "false");
+    } else {
+      body.classList.add("sidebar-collapsed");
+      menuButton.setAttribute("aria-expanded", "false");
+    }
+  }
 
-    // Fecha o menu após selecionar uma seção.
-    mainNav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        mainNav.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.setAttribute("aria-label", "Abrir menu");
-        menuToggle.textContent = "☰";
-      });
-    });
-
-    // Fecha o menu com a tecla Escape.
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        mainNav.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.setAttribute("aria-label", "Abrir menu");
-        menuToggle.textContent = "☰";
+  if (menuButton && sidebar) {
+    menuButton.addEventListener("click", () => {
+      if (isMobile()) {
+        const isOpen = body.classList.contains("mobile-menu-open");
+        isOpen ? closeMenu() : openMenu();
+      } else {
+        const isCollapsed = body.classList.contains("sidebar-collapsed");
+        isCollapsed ? openMenu() : closeMenu();
       }
     });
   }
 
-  // Botão para voltar ao topo.
-  if (backToTop) {
-    window.addEventListener("scroll", () => {
-      backToTop.classList.toggle("visible", window.scrollY > 350);
-    });
-
-    backToTop.addEventListener("click", () => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
+  if (overlay) {
+    overlay.addEventListener("click", closeMenu);
   }
 
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    link.addEventListener("click", () => {
+      document.querySelectorAll(".nav-link").forEach((item) => {
+        item.classList.remove("active");
+      });
+
+      link.classList.add("active");
+
+      if (isMobile()) {
+        closeMenu();
+      }
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMenu();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (!isMobile()) {
+      body.classList.remove("mobile-menu-open");
+    } else {
+      body.classList.add("sidebar-collapsed");
+    }
+  });
+
   /*
-   * LINKS PARA PREENCHER DEPOIS
+   * COLOQUE OS LINKS OFICIAIS AQUI DEPOIS.
    *
-   * Substitua os valores vazios pelos links oficiais.
-   * Exemplo de WhatsApp:
-   * "https://wa.me/5543999999999"
+   * Exemplos de formato:
+   * manuais: "https://drive.google.com/..."
+   * calendario: "https://..."
+   * secretaria: "https://wa.me/55DDDNUMERO"
    *
-   * Não coloque espaços, parênteses ou traços no número.
+   * Use apenas endereços oficiais confirmados.
    */
   const linksOficiais = {
     manuais: "",
@@ -76,26 +97,24 @@ document.addEventListener("DOMContentLoaded", () => {
     outros: ""
   };
 
-  // Os links vazios continuam como espaços reservados.
-  document.querySelectorAll("[data-placeholder]").forEach((element) => {
-    const nomeLink = element.dataset.placeholder;
-    const url = linksOficiais[nomeLink];
+  document.querySelectorAll("[data-link]").forEach((link) => {
+    const key = link.dataset.link;
+    const url = linksOficiais[key];
 
-    if (url && url.trim() !== "") {
-      element.href = url;
-      element.target = "_blank";
-      element.rel = "noopener noreferrer";
-      element.classList.remove("placeholder-link");
+    if (url && url.trim()) {
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.classList.remove("placeholder-link");
+      link.textContent = "Acessar →";
     } else {
-      element.href = "#";
-      element.classList.add("placeholder-link");
-
-      element.addEventListener("click", (event) => {
+      link.href = "#";
+      link.addEventListener("click", (event) => {
         event.preventDefault();
-        alert("Este link será configurado posteriormente.");
+        alert("Este endereço será adicionado quando os links oficiais forem definidos.");
       });
     }
   });
 
-  console.info("Portal CCM Santa Felicidade carregado.");
+  console.info("Portal do CCM Santa Felicidade carregado.");
 });
