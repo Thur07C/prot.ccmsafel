@@ -1,0 +1,55 @@
+/* ===== Portal CCM Santa Felicidade — estilos base =====
+   Para mudar as cores, edite só os valores abaixo. */
+:root{--azul:#12417a;--azul-esc:#0b2d57;--azul-cl:#e8f1fb;--azul-med:#2f6db5;--cinza:#f3f5f8;--borda:#d5dce6;--texto:#1d2733;--branco:#fff}
+*{box-sizing:border-box}
+html{scroll-padding-top:5rem}
+body{margin:0;font:1rem/1.6 "Segoe UI",system-ui,sans-serif;color:var(--texto);background:var(--cinza);overflow-x:hidden}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--azul-esc);line-height:1.25}
+a{color:var(--azul-med)}
+:focus-visible{outline:3px solid #f0a500;outline-offset:2px}
+.pular{position:absolute;left:-999px;background:var(--branco);padding:.6rem 1rem;z-index:100}
+.pular:focus{left:.5rem;top:.5rem}
+/* Cabeçalho */
+.topo{background:var(--azul);color:var(--branco);display:flex;align-items:center;gap:.9rem;padding:.7rem 1rem;position:sticky;top:0;z-index:30}
+.brasao{width:52px;height:52px;border-radius:8px;background:var(--branco);color:var(--azul);display:grid;place-items:center;font-size:.65rem;text-align:center;line-height:1.1;flex:none;overflow:hidden}
+.brasao img{width:100%;height:100%;object-fit:contain}
+.titulo-site{display:flex;flex-direction:column;min-width:0}
+.titulo-site strong{font:700 1.1rem/1.2 Georgia,serif}
+.titulo-site span{font-size:.85rem;opacity:.9}
+.btn-menu{display:none;margin-left:auto;background:transparent;border:2px solid var(--branco);border-radius:8px;width:48px;height:48px;cursor:pointer;padding:0}
+.btn-menu span{display:block;width:24px;height:3px;background:var(--branco);margin:5px auto;border-radius:2px}
+/* Estrutura: menu lateral + conteúdo */
+.estrutura{display:flex;align-items:flex-start;max-width:1280px;margin:0 auto}
+.menu{width:260px;flex:none;background:var(--branco);border-right:1px solid var(--borda);min-height:calc(100vh - 76px);position:sticky;top:76px;padding:.8rem 0}
+.menu-cab{display:none}
+.menu ul{list-style:none;margin:0;padding:0}
+.menu a{display:block;padding:.7rem 1.2rem;text-decoration:none;color:var(--texto);border-left:4px solid transparent}
+.menu a:hover{background:var(--azul-cl)}
+.menu a[aria-current="page"]{background:var(--azul-cl);border-left-color:var(--azul);font-weight:700;color:var(--azul-esc)}
+.conteudo{flex:1;min-width:0;padding:1.5rem clamp(1rem,3vw,2.5rem) 3rem}
+.conteudo>h1{margin-top:0;border-bottom:3px solid var(--azul);padding-bottom:.4rem}
+.fundo-menu{display:none}
+/* Blocos */
+.grade{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.bloco{background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:1rem 1.2rem}
+.bloco h2,.bloco h3{margin-top:0;font-size:1.15rem}
+.aviso-prov{background:#fff8e1;border:1px dashed #b88700;border-radius:8px;padding:.7rem 1rem;font-size:.9rem;margin:0 0 1.2rem}
+.acesso{display:block;text-decoration:none;font-weight:600;color:var(--azul-esc);background:var(--azul-cl);border-radius:8px;padding:.9rem 1rem}
+.acesso:hover{background:#d3e4f7}
+/* Rodapé */
+.rodape{background:var(--azul-esc);color:#dbe7f5;padding:1.5rem 1rem;font-size:.92rem}
+.rodape-in{max-width:1280px;margin:0 auto;display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.rodape a{color:#fff}.rodape h2{color:#fff;font-size:1rem;margin:0 0 .4rem}
+.rodape ul{list-style:none;margin:0;padding:0}.rodape li{margin:.25rem 0}
+/* Celular: menu hambúrguer */
+@media (max-width:860px){
+ .btn-menu{display:block}
+ .estrutura{display:block}
+ .menu{position:fixed;top:0;left:0;bottom:0;width:min(82vw,320px);z-index:50;transform:translateX(-105%);transition:transform .25s;overflow-y:auto;min-height:0;padding-top:0}
+ .menu.aberto{transform:none}
+ .menu-cab{display:flex;justify-content:space-between;align-items:center;background:var(--azul);color:var(--branco);padding:.8rem 1rem;font-weight:700}
+ .btn-fechar{background:transparent;border:2px solid var(--branco);color:var(--branco);border-radius:8px;min-width:44px;min-height:44px;font-size:1.3rem;cursor:pointer}
+ .menu a{padding:.9rem 1.2rem}
+ .fundo-menu.aberto{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40}
+}
+@media (prefers-reduced-motion:reduce){.menu{transition:none}}
