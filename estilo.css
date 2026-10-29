@@ -53,3 +53,13 @@ a{color:var(--azul-med)}
  .fundo-menu.aberto{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40}
 }
 @media (prefers-reduced-motion:reduce){.menu{transition:none}}
+/* ===== Etapa 2: listas, avisos e cartões de gestão ===== */
+.data{color:#566;font-size:.85rem;margin:.2rem 0}
+.bloco img{max-width:100%;height:auto;border-radius:6px}
+.prioritario{border-left:6px solid #b3261e;background:#fff5f4}
+.selo{display:inline-block;background:#b3261e;color:#fff;font-size:.8rem;font-weight:700;border-radius:4px;padding:.1rem .5rem}
+.vazio{color:#566;font-style:italic}
+.cartao-gestao{text-align:center}
+.foto-prov{width:96px;height:96px;border-radius:50%;background:var(--azul-cl);border:2px dashed var(--azul-med);margin:0 auto .6rem;display:grid;place-items:center;font-size:.7rem;color:var(--azul)}
+.prov{color:#7a5b00;font-style:italic}
+.conteudo section.bloco{margin-bottom:1rem}

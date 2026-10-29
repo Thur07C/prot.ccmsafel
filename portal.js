@@ -23,7 +23,8 @@ const PAGINAS = [
   ["faq.html","Perguntas frequentes"]
 ];
 (function(){
-  const atual = location.pathname.split("/").pop() || "index.html";
+  let atual = location.pathname.split("/").pop() || "index.html";
+  if (atual === "noticia.html") atual = "noticias.html"; // detalhe da notícia destaca "Notícias"
   const brasao = CONFIG.brasao ? `<img src="${CONFIG.brasao}" alt="Brasão do colégio">` : "Brasão<br>(pendente)";
   const itens = PAGINAS.map(([u,t]) => `<li><a href="${u}"${u===atual?' aria-current="page"':""}>${t}</a></li>`).join("");
   document.body.insertAdjacentHTML("afterbegin", `
