@@ -49,7 +49,7 @@ const PAGINAS = [
   modelo.remove();
   document.body.insertAdjacentHTML("beforeend", `
     <footer class="rodape"><div class="rodape-in">
-      <div><h2>${CONFIG.nome}</h2><p>Endereço, telefone e e-mail: pendentes de configuração (dados oficiais ainda não fornecidos).</p></div>
+      <div><h2>${CONFIG.nome}</h2>${[CONTATOS.endereco,CONTATOS.telefone,CONTATOS.email].filter(Boolean).map(x=>`<p>${x.replace(/</g,"&lt;")}</p>`).join("")||"<p>Contatos oficiais pendentes de configuração.</p>"}</div>
       <div><h2>Páginas</h2><ul>${PAGINAS.slice(0,6).map(([u,t])=>`<li><a href="${u}">${t}</a></li>`).join("")}</ul></div>
       <div><h2>Atalhos</h2><ul><li><a href="ouvidoria.html">Ouvidoria</a></li><li><a href="contatos.html">Contatos</a></li><li><a href="documentos.html">Documentos oficiais</a></li><li><a href="faq.html">Perguntas frequentes</a></li></ul></div>
     </div></footer>`);
